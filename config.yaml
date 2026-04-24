@@ -1,0 +1,28 @@
+owner: "940smiley"
+workdir: ".nova-workdir"
+mutation_mode: "dry-run" # dry-run | write | merge
+merge:
+  strategy: "squash" # merge | squash | rebase
+  require_green_checks: true
+  allow_conflict_resolution: true
+  max_files_for_auto_conflict_resolution: 20
+pr_comment_edits:
+  apply_github_suggestions: true
+  bot_author_allowlist:
+    - dependabot[bot]
+    - github-actions[bot]
+    - renovate[bot]
+    - cursor[bot]
+    - copilot-pull-request-reviewer[bot]
+dependabot:
+  states: ["open"]
+  severity_floor: "low" # low | medium | high | critical
+  create_fix_branches: true
+  branch_prefix: "nova/dependabot-fix"
+scanning:
+  include_archived: false
+  include_forks: false
+  max_repos: 0 # 0 = no limit
+exports:
+  csv_log: "nova_scan_log.csv"
+  suggestions: "Nova_suggests.txt"
