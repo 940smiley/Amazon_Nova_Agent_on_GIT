@@ -1,32 +1,23 @@
+from __future__ import annotations
 from dataclasses import dataclass, asdict
 from datetime import datetime, timezone
-from typing import Any, Dict, Optional
-
 
 @dataclass
 class Finding:
     timestamp: str
     owner: str
     repo: str
-    category: str
+    kind: str
     severity: str
     title: str
-    url: str = ""
-    state: str = ""
     action: str = "observed"
+    state: str = ""
+    url: str = ""
     details: str = ""
 
-    @staticmethod
-    def now(owner: str, repo: str, category: str, severity: str, title: str, **kwargs: Any) -> "Finding":
-        return Finding(
-            timestamp=datetime.now(timezone.utc).isoformat(),
-            owner=owner,
-            repo=repo,
-            category=category,
-            severity=severity,
-            title=title,
-            **kwargs,
-        )
+    @classmethod
+    def now(cls, owner, repo, kind, severity, title, *, action="observed", state="", url="", details=""):
+        return cls(datetime.now(timezone.utc).isoformat(), owner, repo, kind, severity or "", title or "", action or "", state or "", url or "", details or "")
 
-    def row(self) -> Dict[str, str]:
-        return {k: str(v) for k, v in asdict(self).items()}
+    def to_dict(self):
+        return asdict(self)
