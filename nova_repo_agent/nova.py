@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+
 import requests
 
 
@@ -10,7 +11,9 @@ class NovaClient:
         if not self.api_key:
             raise RuntimeError("NOVA_API_KEY or AMAZON_NOVA_API_KEY is required")
 
-        self.base_url = os.getenv("NOVA_BASE_URL", "https://api.nova.amazon.com/v1").rstrip("/")
+        self.base_url = os.getenv(
+            "NOVA_BASE_URL", "https://api.nova.amazon.com/v1"
+        ).rstrip("/")
         self.model_id = model_id or os.getenv("NOVA_MODEL_ID", "amazon.nova-lite-v1")
 
     def chat(self, prompt: str) -> str:
@@ -46,8 +49,7 @@ class NovaClient:
         return data["choices"][0]["message"]["content"]
 
     def repo_suggestions(self, repo_name: str, inventory: str) -> str:
-        return self.chat(
-            f"""
+        return self.chat(f"""
 Review this GitHub repository inventory and produce specific maintenance suggestions.
 
 Repository:
@@ -65,5 +67,5 @@ Focus on:
 - repo-specific next actions
 
 Return markdown bullets.
-""".strip()
-        )
+""".strip())
+

@@ -31,3 +31,4 @@ nova:
   max_alerts_in_prompt: 40
   max_issues_in_prompt: 30
   max_prs_in_prompt: 30
+

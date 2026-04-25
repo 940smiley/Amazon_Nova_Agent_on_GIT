@@ -1,6 +1,8 @@
 from __future__ import annotations
-from dataclasses import dataclass, asdict
+
+from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
+
 
 @dataclass
 class Finding:
@@ -16,8 +18,32 @@ class Finding:
     details: str = ""
 
     @classmethod
-    def now(cls, owner, repo, kind, severity, title, *, action="observed", state="", url="", details=""):
-        return cls(datetime.now(timezone.utc).isoformat(), owner, repo, kind, severity or "", title or "", action or "", state or "", url or "", details or "")
+    def now(
+        cls,
+        owner,
+        repo,
+        kind,
+        severity,
+        title,
+        *,
+        action="observed",
+        state="",
+        url="",
+        details="",
+    ):
+        return cls(
+            datetime.now(timezone.utc).isoformat(),
+            owner,
+            repo,
+            kind,
+            severity or "",
+            title or "",
+            action or "",
+            state or "",
+            url or "",
+            details or "",
+        )
 
     def to_dict(self):
         return asdict(self)
+
